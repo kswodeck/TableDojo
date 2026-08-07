@@ -1,0 +1,136 @@
+@import 'tailwindcss';
+
+/**
+ * Table Dojo design tokens.
+ *
+ * Dark-first, because that is how a card table actually reads: deep felt for
+ * the surface, warm brass for anything that represents value, and a single
+ * crimson reserved for loss and destructive actions. The original site mixed
+ * nine hard-coded hexes with a Georgia/Verdana/Times font stack and sized type
+ * with `calc(50px + 6vw + 5vh)`; everything here comes from tokens.
+ */
+@theme {
+  --color-felt-950: #04140f;
+  --color-felt-900: #072019;
+  --color-felt-800: #0b2c22;
+  --color-felt-700: #10402f;
+  --color-felt-600: #17573f;
+  --color-felt-500: #1f7051;
+
+  --color-brass-300: #f2d98a;
+  --color-brass-400: #e5c25c;
+  --color-brass-500: #d4a72c;
+  --color-brass-600: #ab841f;
+
+  --color-crimson-400: #f2555f;
+  --color-crimson-500: #d92d3c;
+  --color-crimson-600: #a81b28;
+
+  --color-ink-50: #f6f7f5;
+  --color-ink-200: #cdd5cf;
+  --color-ink-400: #8fa198;
+  --color-ink-600: #5a6b62;
+  --color-ink-800: #2a3831;
+  --color-ink-900: #16211c;
+
+  --font-display: 'Georgia', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+  --radius-card: 0.75rem;
+
+  --shadow-table: 0 24px 60px -20px rgb(0 0 0 / 0.65);
+  --shadow-chip: 0 4px 0 0 var(--color-brass-600);
+
+  --animate-deal: deal 0.32s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+  --animate-flip: flip 0.4s ease-out both;
+  --animate-tumble: tumble 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  --animate-rise: rise 0.35s ease-out both;
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(-6deg) scale(0.94);
+  }
+}
+
+@keyframes flip {
+  from {
+    transform: rotateY(90deg) scale(0.92);
+    opacity: 0.35;
+  }
+}
+
+@keyframes tumble {
+  from {
+    transform: rotate(-140deg) scale(0.55);
+    opacity: 0.4;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* The felt weave: two offset radial gradients over the base colour. */
+@utility bg-felt {
+  background-color: var(--color-felt-900);
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%, color-mix(in oklab, var(--color-felt-600) 55%, transparent), transparent),
+    radial-gradient(ellipse 60% 50% at 90% 110%, color-mix(in oklab, var(--color-felt-700) 40%, transparent), transparent);
+}
+
+@utility surface {
+  background-color: color-mix(in oklab, var(--color-felt-800) 82%, black);
+  border: 1px solid color-mix(in oklab, var(--color-felt-500) 28%, transparent);
+  border-radius: var(--radius-card);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Honour a reader's reduced-motion setting; the old site animated regardless. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply bg-felt text-ink-50 font-sans antialiased;
+    min-height: 100dvh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  /* A single visible focus treatment everywhere, rather than none at all. */
+  :focus-visible {
+    outline: 2px solid var(--color-brass-400);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  ::selection {
+    background: var(--color-brass-500);
+    color: var(--color-felt-950);
+  }
+}
