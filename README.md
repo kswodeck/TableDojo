@@ -13,7 +13,7 @@ Play money only. No deposits, no cash prizes, no slot machines.
 
 | Layer | Choice | Why |
 | --- | --- | --- |
-| Web | Next.js 15 (App Router), React 19, Tailwind CSS 4 | Server components for content pages, client components for the tables |
+| Web | Next.js 16 (App Router), React 19, Tailwind CSS 4 | Server components for content pages, client components for the tables |
 | API | Express 5, TypeScript | Standalone REST service — auth, accounts, blog, and server-authoritative games |
 | Data | MongoDB via Mongoose 8 | Schemas map directly from the original app; indexed for the leaderboard |
 | Rules | `@tabledojo/game-logic` | Pure, dependency-free TypeScript shared by both apps |

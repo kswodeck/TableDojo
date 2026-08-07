@@ -2,7 +2,7 @@
   "name": "@tabledojo/web",
   "version": "2.0.0",
   "private": true,
-  "description": "Table Dojo web app — Next.js App Router frontend.",
+  "description": "Table Dojo web app \u2014 Next.js App Router frontend.",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tabledojo/game-logic": "*",
-    "next": "^15.5.4",
+    "next": "^16.3.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
