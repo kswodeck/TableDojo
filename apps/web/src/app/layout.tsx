@@ -3,6 +3,7 @@ import './globals.css';
 import { AuthProvider } from '@/lib/auth-context';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { WakeNotice } from '@/components/wake-notice';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tabledojo.com'),
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Skip to content
           </a>
           <SiteHeader />
+          <WakeNotice />
           <main id="main" className="mx-auto w-full max-w-6xl px-4 py-10">
             {children}
           </main>

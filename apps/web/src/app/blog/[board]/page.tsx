@@ -4,6 +4,7 @@ import { ApiError, api } from '@/lib/api';
 import type { Board, Post } from '@/lib/types';
 import { formatRelative } from '@/lib/format';
 import { ButtonLink } from '@/components/ui/button';
+import { BOARDS } from '@/lib/boards';
 import { EmptyState, PageHeading } from '@/components/ui/surface';
 
 export const dynamic = 'force-dynamic';
@@ -31,6 +32,36 @@ export default async function BoardPage({
     data = await api.get<BoardResponse>(`/api/blog/boards/${slug}?page=${encodeURIComponent(page)}`);
   } catch (error) {
     if (error instanceof ApiError && error.status === 404) notFound();
+
+    // The API runs on a tier that suspends when idle. Rendering happens inside
+    // a serverless function with its own time limit, so waiting out a cold
+    // start here would kill the whole page. Show the board shell instead and
+    // let the reader retry once the API is up.
+    if (error instanceof ApiError && error.isUnreachable) {
+      const board = BOARDS.find((entry) => entry.slug === slug.toLowerCase());
+      if (!board) notFound();
+
+      return (
+        <>
+          <nav className="mb-4">
+            <Link href="/blog" className="text-sm text-ink-400 underline-offset-4 hover:text-brass-300 hover:underline">
+              ← All boards
+            </Link>
+          </nav>
+          <PageHeading eyebrow="Community" title={board.name} description={board.description} />
+          <EmptyState
+            title="Posts are still loading"
+            description="The community service is waking up — this takes up to a minute on the free tier. Refresh shortly."
+            action={
+              <ButtonLink href={`/blog/${slug}`} className="mt-2">
+                Try again
+              </ButtonLink>
+            }
+          />
+        </>
+      );
+    }
+
     throw error;
   }
 

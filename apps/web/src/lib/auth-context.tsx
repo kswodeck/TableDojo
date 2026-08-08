@@ -4,9 +4,14 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { api } from './api';
 import type { AuthResponse, LoginBonus, User } from './types';
 
+/** How long the API may take before we tell the visitor it is waking up. */
+const WAKE_NOTICE_AFTER_MS = 2_500;
+
 interface AuthState {
   user: User | null;
   loading: boolean;
+  /** True while a slow first request suggests the API is cold-starting. */
+  wakingUp: boolean;
   bonus: LoginBonus | null;
   login: (username: string, password: string) => Promise<void>;
   register: (input: RegisterInput) => Promise<void>;
@@ -32,15 +37,22 @@ const AuthContext = createContext<AuthState | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [wakingUp, setWakingUp] = useState(false);
   const [bonus, setBonus] = useState<LoginBonus | null>(null);
 
   const refresh = useCallback(async () => {
+    // `/api/auth/me` is the first call every visitor makes, so it doubles as
+    // the warm-up ping. If it drags, the free-tier instance is booting.
+    const notice = setTimeout(() => setWakingUp(true), WAKE_NOTICE_AFTER_MS);
+
     try {
       const data = await api.get<{ user: User | null }>('/api/auth/me');
       setUser(data.user);
     } catch {
       setUser(null);
     } finally {
+      clearTimeout(notice);
+      setWakingUp(false);
       setLoading(false);
     }
   }, []);
@@ -74,8 +86,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<AuthState>(
-    () => ({ user, loading, bonus, login, register, logout, setCoins, refresh, dismissBonus: () => setBonus(null) }),
-    [user, loading, bonus, login, register, logout, setCoins, refresh],
+    () => ({
+      user,
+      loading,
+      wakingUp,
+      bonus,
+      login,
+      register,
+      logout,
+      setCoins,
+      refresh,
+      dismissBonus: () => setBonus(null),
+    }),
+    [user, loading, wakingUp, bonus, login, register, logout, setCoins, refresh],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

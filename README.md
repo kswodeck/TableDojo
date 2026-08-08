@@ -61,6 +61,16 @@ npm run dev:web                                   # http://localhost:3000
 | `npm run typecheck` | Type-check all workspaces |
 | `npm run lint` / `npm run format` | ESLint 9 flat config / Prettier |
 
+## Deployment
+
+Runs at **$0/month**: Vercel Hobby (web) + Render free instance (API) + MongoDB Atlas free cluster.
+Full walkthrough in [DEPLOYMENT.md](DEPLOYMENT.md), blueprint in [`render.yaml`](render.yaml).
+
+The free API instance suspends after 15 minutes idle. The app is built for that: the home page, the
+three `/learn` guides and all three `/practice` tables run entirely in the browser and stay fully
+usable while the API boots, SSR pages fail soft instead of erroring, and the UI says what is
+happening rather than hanging. Only sign-in, ranked play, the leaderboard and the blog wait on it.
+
 ## Configuration
 
 Everything is validated with Zod at boot, so a misconfigured deploy fails immediately and says which
@@ -170,3 +180,5 @@ Reframed from a virtual casino to a **training** site for casino table games:
   bonus, profanity). Route-level integration tests need a MongoDB instance and are not written yet.
 - Tutorial mode exists as scaffolding: the strategy engine, grading and `/learn` routes are in place;
   guided step-by-step lessons are not built.
+- On the free hosting tier the first sign-in after an idle spell waits on a cold start of up to a
+  minute. Moving the API to Render's $7/month Starter plan removes it with no code change.
