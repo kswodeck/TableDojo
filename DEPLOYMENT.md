@@ -67,14 +67,18 @@ The repo has a [`render.yaml`](render.yaml) blueprint.
 
    With it set, Vercel still installs from the repo root (it detects the npm workspace) and the
    `prebuild` script compiles `@tabledojo/game-logic` before `next build`.
-3. Environment variables:
+3. **Framework Preset: Next.js.** [`apps/web/vercel.json`](apps/web/vercel.json) pins this, but check
+   the dashboard matches. Vercel picks the preset at import time from whatever it finds in the root
+   directory, and **changing Root Directory later does not reset it** — so a project first imported
+   against `apps/api` keeps the Express preset and fails after a successful `next build`.
+4. Environment variables:
 
    | Variable | Value |
    | --- | --- |
    | `NEXT_PUBLIC_API_URL` | `https://<your-service>.onrender.com` |
    | `API_INTERNAL_URL` | same |
 
-4. Deploy.
+5. Deploy.
 
 > **`NEXT_PUBLIC_*` variables are inlined at build time.** Changing one in the dashboard does nothing
 > until you redeploy. If the browser is calling `localhost:5000` in production, this is why.
@@ -133,6 +137,12 @@ because those are devDependencies. The root [`.npmrc`](.npmrc) sets `include=dev
 can force it with an Install Command of `npm install --include=dev`.
 
 **Vercel build log mentions `apps/api`.** Root Directory is not set to `apps/web`. See step 3.
+
+**`No entrypoint found. Searched for: app.{js,...}, index.{js,...}, server.{js,...}` — after a
+successful build.** The route table printed, so `next build` worked; this is Vercel's Express/Node
+builder running afterwards and looking for a server entrypoint. The Framework Preset is wrong. Set it
+to **Next.js** in Settings → Build and Deployment. It stays on whatever was detected at import time,
+so this is the usual leftover from a project first imported with `apps/api` as the root directory.
 
 **Vercel deploys but the browser calls `localhost:5000`.** `NEXT_PUBLIC_*` is inlined at build time.
 Set it, then redeploy.
