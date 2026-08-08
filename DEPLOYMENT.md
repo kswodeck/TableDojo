@@ -58,9 +58,15 @@ The repo has a [`render.yaml`](render.yaml) blueprint.
 ## 3. Web — Vercel
 
 1. Vercel → **Add New → Project** → import this repo.
-2. **Root Directory: `apps/web`.** This is the one setting that matters. Vercel detects the npm
-   workspace and installs from the repo root; the `prebuild` script compiles
-   `@tabledojo/game-logic` before `next build`.
+2. **Root Directory: `apps/web`.**
+
+   > This is not optional and it is easy to miss — it is on the import screen under
+   > *Build and Output Settings*, and it defaults to the repo root. Leave it at the root and Vercel
+   > runs the root `npm run build`, which builds the API too, then fails looking for `.next` in the
+   > wrong place. If the build log shows `/vercel/path0/apps/api`, this is the setting to change.
+
+   With it set, Vercel still installs from the repo root (it detects the npm workspace) and the
+   `prebuild` script compiles `@tabledojo/game-logic` before `next build`.
 3. Environment variables:
 
    | Variable | Value |
@@ -115,6 +121,27 @@ CONTACT_TO=you@example.com
 ```
 
 ---
+
+## Troubleshooting
+
+**`Cannot find type definition file for 'node'` (TS2688), or a wall of `Cannot find module
+'@tabledojo/game-logic'` (TS2307).**
+The build installed without devDependencies. Both platforms set `NODE_ENV=production` during the
+build, and npm treats that as an implicit `--omit=dev` — which drops `typescript` and `@types/*`,
+because those are devDependencies. The root [`.npmrc`](.npmrc) sets `include=dev` to override it, and
+`render.yaml` passes `--include=dev` explicitly. If you replaced either, put it back. On Vercel you
+can force it with an Install Command of `npm install --include=dev`.
+
+**Vercel build log mentions `apps/api`.** Root Directory is not set to `apps/web`. See step 3.
+
+**Vercel deploys but the browser calls `localhost:5000`.** `NEXT_PUBLIC_*` is inlined at build time.
+Set it, then redeploy.
+
+**Render deploys but every request 500s.** Check the logs for the Zod message naming the missing
+variable — most often `MONGODB_URI`. The app refuses to boot on bad config rather than failing later.
+
+**Login works for you but not in Safari.** Cookie is cross-site. Either finish step 4 or set
+`COOKIE_SAMESITE=none` while you are still on the platform hostnames.
 
 ## Gotchas
 

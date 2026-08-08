@@ -61,6 +61,9 @@ npm run dev:web                                   # http://localhost:3000
 | `npm run typecheck` | Type-check all workspaces |
 | `npm run lint` / `npm run format` | ESLint 9 flat config / Prettier |
 
+> The root [`.npmrc`](.npmrc) sets `include=dev` so builds work on hosts that export
+> `NODE_ENV=production` — npm otherwise skips devDependencies, and `typescript` lives there.
+
 ## Deployment
 
 Runs at **$0/month**: Vercel Hobby (web) + Render free instance (API) + MongoDB Atlas free cluster.
