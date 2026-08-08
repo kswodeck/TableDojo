@@ -47,5 +47,8 @@ jobs:
           NEXT_PUBLIC_API_URL: http://localhost:5000
           API_INTERNAL_URL: http://localhost:5000
 
+      # `--include=prod` resets the include list that the root .npmrc sets to
+      # `dev`; without it that setting cancels `--omit=dev` and the audit would
+      # also flag dev-only tooling that never ships.
       - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=high
+        run: npm audit --include=prod --omit=dev --audit-level=high

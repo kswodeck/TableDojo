@@ -19,7 +19,12 @@ services:
 
     # Builds from the repo root so npm workspaces resolve, and builds the rules
     # package first because the API imports its compiled output.
-    buildCommand: npm ci && npm run build --workspace @tabledojo/game-logic && npm run build --workspace @tabledojo/api
+    #
+    # --include=dev is required: NODE_ENV=production below makes npm omit
+    # devDependencies, which is where typescript and @types/node live. The
+    # root .npmrc sets this too; it is repeated here so the reason is visible
+    # at the point of use.
+    buildCommand: npm ci --include=dev && npm run build --workspace @tabledojo/game-logic && npm run build --workspace @tabledojo/api
     startCommand: node apps/api/dist/server.js
 
     healthCheckPath: /health
