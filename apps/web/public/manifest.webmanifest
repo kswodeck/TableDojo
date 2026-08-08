@@ -1,0 +1,13 @@
+{
+  "name": "Table Dojo",
+  "short_name": "Table Dojo",
+  "description": "Learn and practise casino table games — blackjack, video poker and farkle.",
+  "icons": [
+    { "src": "/images/casinocompetitor-favicon.png", "type": "image/png", "sizes": "180x180", "purpose": "any" },
+    { "src": "/images/casinocompetitor.png", "type": "image/png", "sizes": "512x512", "purpose": "any" }
+  ],
+  "start_url": "/",
+  "background_color": "#072019",
+  "display": "standalone",
+  "theme_color": "#072019"
+}

@@ -1,6 +1,0 @@
-Sitemap: https://casinocompetitor.com/sitemap.xml
-Sitemap: https://www.casinocompetitor.com/sitemap.xml
-
-User-agent: *
-Allow: /
-Host: https://casinocompetitor.com

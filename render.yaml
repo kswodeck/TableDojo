@@ -1,0 +1,59 @@
+# Render Blueprint for the Table Dojo API.
+#
+# Create it with: Render dashboard -> New -> Blueprint -> pick this repo.
+# The frontend is NOT here; it deploys to Vercel. See DEPLOYMENT.md.
+#
+# The free plan suspends the instance after 15 minutes idle and takes roughly
+# a minute to wake. That is survivable here because practice mode, the guides
+# and the home page all run in the browser and never touch this service — see
+# the cold-start handling in apps/web/src/lib/api.ts.
+services:
+  - type: web
+    name: tabledojo-api
+    runtime: node
+    plan: free
+    region: oregon
+    # This repo's default branch. Change it here if you rename the branch,
+    # or Render will deploy nothing.
+    branch: master
+
+    # Builds from the repo root so npm workspaces resolve, and builds the rules
+    # package first because the API imports its compiled output.
+    buildCommand: npm ci && npm run build --workspace @tabledojo/game-logic && npm run build --workspace @tabledojo/api
+    startCommand: node apps/api/dist/server.js
+
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Render provides PORT; the app already reads it.
+      - key: TRUST_PROXY
+        # Render terminates TLS at its edge. Without this, Secure cookies are
+        # never set and rate limiting buckets every visitor under one proxy IP.
+        value: 1
+      - key: SESSION_COOKIE_NAME
+        value: td.sid
+
+      # Set these in the dashboard — never commit them.
+      - key: MONGODB_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+
+      # Update all three once the custom domain is attached.
+      - key: CORS_ORIGINS
+        sync: false
+      - key: WEB_ORIGIN
+        sync: false
+      - key: COOKIE_SAMESITE
+        sync: false
+
+      # Optional. With SMTP_URL unset the API logs mail instead of sending it,
+      # so password reset and the contact form still work end to end in the UI.
+      - key: SMTP_URL
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: CONTACT_TO
+        sync: false

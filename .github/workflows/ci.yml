@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+# A new push supersedes an in-flight run on the same branch.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Test, typecheck, lint and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # The rules package must be compiled before the apps typecheck against it.
+      - name: Build rules engine
+        run: npm run build --workspace @tabledojo/game-logic
+
+      - name: Test
+        run: npm test
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npx eslint .
+
+      - name: Build
+        run: npm run build
+        env:
+          # Vercel supplies the real value; the build only needs it to be present
+          # and valid, since NEXT_PUBLIC_* is inlined at build time.
+          NEXT_PUBLIC_API_URL: http://localhost:5000
+          API_INTERNAL_URL: http://localhost:5000
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
