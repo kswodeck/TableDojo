@@ -17,6 +17,11 @@ sign-in, ranked play, the leaderboard and the blog wait on it, and the UI says s
 
 ---
 
+## 0. Merge to `master` first
+
+Both platforms deploy from a branch, and `render.yaml` is pinned to `master` (this repo's default).
+Merge the rewrite before wiring anything up, or Render and Vercel will build the old Express/EJS app.
+
 ## 1. Database — MongoDB Atlas
 
 1. Create an account, then a **free cluster** (M0, 512 MB — free forever, no card).

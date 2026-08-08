@@ -13,7 +13,9 @@ services:
     runtime: node
     plan: free
     region: oregon
-    branch: main
+    # This repo's default branch. Change it here if you rename the branch,
+    # or Render will deploy nothing.
+    branch: master
 
     # Builds from the repo root so npm workspaces resolve, and builds the rules
     # package first because the API imports its compiled output.
