@@ -44,7 +44,7 @@ export function RequireAuth({ practiceHref, children }: { practiceHref?: string;
           <p className="mt-6 text-sm text-ink-400">
             Or{' '}
             <Link href={practiceHref} className="text-brass-300 underline underline-offset-4">
-              practise for free
+              practice for free
             </Link>{' '}
             — no account needed.
           </p>

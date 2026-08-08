@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { ButtonLink } from '@/components/ui/button';
 import { CoinCount } from '@/components/games/pieces';
 import { Modal } from '@/components/ui/modal';
 import { Badge } from '@/components/ui/surface';
+import { GameArt, type GameArtKind } from '@/components/games/game-art';
 
 const GAMES = [
   {
@@ -16,7 +16,7 @@ const GAMES = [
     practice: '/practice/blackjack',
     compete: '/compete/blackjack',
     learn: '/learn/blackjack',
-    art: '/images/cards/1-1.webp',
+    art: 'blackjack' as GameArtKind,
   },
   {
     name: 'Video Poker',
@@ -25,7 +25,7 @@ const GAMES = [
     practice: '/practice/poker',
     compete: '/compete/poker',
     learn: '/learn/poker',
-    art: '/images/cards/13-2.webp',
+    art: 'poker' as GameArtKind,
   },
   {
     name: 'Farkle',
@@ -34,13 +34,13 @@ const GAMES = [
     practice: '/practice/farkle',
     compete: '/compete/farkle',
     learn: '/learn/farkle',
-    art: '/images/5dice.webp',
+    art: 'farkle' as GameArtKind,
   },
 ];
 
 const STEPS = [
   { title: 'Learn the rules', body: 'Short, plain-language guides for every game — no jargon walls.' },
-  { title: 'Practise for free', body: 'Unlimited play with no coins at stake, and hints when you want them.' },
+  { title: 'Practice for free', body: 'Unlimited play with no coins at stake, and hints when you want them.' },
   { title: 'Climb the board', body: 'Wager coins in ranked mode and see where you land against everyone else.' },
 ];
 
@@ -63,8 +63,8 @@ export default function HomePage() {
         </h1>
 
         <p className="mx-auto mt-5 max-w-2xl text-lg text-pretty text-ink-200">
-          Table Dojo teaches casino card and table games the way they are actually played. Practise free, check
-          your decisions against the maths, then compete for a place on the leaderboard.
+          Table Dojo teaches casino card and table games the way they are actually played. Practice free, check
+          your decisions against the math, then compete for a place on the leaderboard.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -82,7 +82,7 @@ export default function HomePage() {
           ) : (
             <>
               <ButtonLink href="/practice/blackjack" size="lg">
-                Start practising — no account
+                Start practicing — no account
               </ButtonLink>
               <ButtonLink href="/register" variant="secondary" size="lg">
                 Create an account
@@ -106,14 +106,14 @@ export default function HomePage() {
         <div className="mt-6 grid gap-5 md:grid-cols-3">
           {GAMES.map((game) => (
             <article key={game.name} className="surface group flex flex-col p-6 transition-colors hover:border-brass-400/40">
-              <Image src={game.art} alt="" width={64} height={90} className="mb-4 h-20 w-auto drop-shadow-lg" aria-hidden />
+              <GameArt kind={game.art} className="mb-4" />
               <h3 className="text-xl font-bold text-ink-50">{game.name}</h3>
               <p className="mt-1 text-sm font-medium text-brass-300">{game.tagline}</p>
               <p className="mt-3 flex-1 text-sm text-ink-400">{game.detail}</p>
 
               <div className="mt-5 flex flex-wrap gap-2">
                 <ButtonLink href={game.practice} size="sm">
-                  Practise
+                  Practice
                 </ButtonLink>
                 <ButtonLink href={game.compete} variant="secondary" size="sm">
                   Ranked

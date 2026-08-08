@@ -8,7 +8,7 @@ import { WakeNotice } from '@/components/wake-notice';
 export const metadata: Metadata = {
   metadataBase: new URL('https://tabledojo.com'),
   title: {
-    default: 'Table Dojo — learn and practise casino table games',
+    default: 'Table Dojo — learn and practice casino table games',
     template: '%s · Table Dojo',
   },
   description:
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Table Dojo',
-    title: 'Table Dojo — learn and practise casino table games',
+    title: 'Table Dojo — learn and practice casino table games',
     description: 'Free practice with strategy guidance, then ranked play against the leaderboard.',
   },
   robots: { index: true, follow: true },

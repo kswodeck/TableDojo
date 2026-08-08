@@ -88,7 +88,7 @@ accountRouter.put('/', validate(profileSchema), async (req, res) => {
 
   await user.save();
 
-  // Posts and comments denormalise the username so boards render in one query.
+  // Posts and comments denormalize the username so boards render in one query.
   if (usernameChanged) {
     await Promise.all([
       Post.updateMany({ author: user._id }, { $set: { authorUsername: user.username } }),

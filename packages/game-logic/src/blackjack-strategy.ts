@@ -131,7 +131,7 @@ function hardAdvice(total: number, up: number): ChartEntry {
   }
   if (total === 10) {
     return inRange(up, 2, 9)
-      ? { ideal: 'double', explanation: 'Double 10 against 9 or lower — you are favoured to make 20.' }
+      ? { ideal: 'double', explanation: 'Double 10 against 9 or lower — you are favored to make 20.' }
       : { ideal: 'hit', explanation: 'Against a 10 or ace, just hit — the dealer is too likely to have you beaten.' };
   }
   if (total === 9) {

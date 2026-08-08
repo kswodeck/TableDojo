@@ -2,7 +2,7 @@
   "name": "tabledojo",
   "version": "2.0.0",
   "private": true,
-  "description": "Table Dojo \u2014 learn and practise casino table games (blackjack, poker, farkle) with practice, tutorial and ranked competitive modes.",
+  "description": "Table Dojo \u2014 learn and practice casino table games (blackjack, poker, farkle) with practice, tutorial and ranked competitive modes.",
   "author": "Kris Swodeck",
   "license": "ISC",
   "repository": {

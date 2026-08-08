@@ -66,7 +66,7 @@ function Table() {
               <p className="text-sm text-crimson-400">
                 Not enough coins for that bet.{' '}
                 <a href="/practice/blackjack" className="underline underline-offset-4">
-                  Practise for free
+                  Practice for free
                 </a>{' '}
                 or come back tomorrow for your streak bonus.
               </p>

@@ -33,7 +33,7 @@ export default function LearnFarklePage() {
         eyebrow="Learn"
         title="Farkle scoring"
         description="Roll six dice, keep at least one scoring die, then choose: roll what is left, or bank what you have."
-        actions={<ButtonLink href="/practice/farkle">Practise it</ButtonLink>}
+        actions={<ButtonLink href="/practice/farkle">Practice it</ButtonLink>}
       />
 
       <div className="grid gap-5 lg:grid-cols-2">
@@ -108,7 +108,7 @@ export default function LearnFarklePage() {
             <h2 className="text-xl font-bold">When to bank</h2>
             <p className="mt-3 text-ink-200">
               With two dice left, roughly 44% of rolls farkle. With one die it is 67%. A rough rule: with three or
-              fewer dice remaining and a few hundred points on the table, bank. The maths stops favouring another
+              fewer dice remaining and a few hundred points on the table, bank. The math stops favoring another
               roll long before it feels like it does.
             </p>
           </Panel>

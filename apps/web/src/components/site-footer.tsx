@@ -35,7 +35,7 @@ export function SiteFooter() {
           <div>
             <p className="font-display text-lg font-bold text-brass-300">Table Dojo</p>
             <p className="mt-2 max-w-xs text-sm text-ink-400">
-              Learn casino table games properly — practise for free, then put it to the test on the ranked
+              Learn casino table games properly — practice for free, then put it to the test on the ranked
               leaderboard.
             </p>
           </div>

@@ -22,7 +22,7 @@ export default function LearnPokerPage() {
         eyebrow="Learn"
         title="Video poker: Jacks or Better"
         description="You are dealt five cards, hold what you want, and the rest are replaced once. A pair of jacks or better is the smallest paying hand."
-        actions={<ButtonLink href="/practice/poker">Practise it</ButtonLink>}
+        actions={<ButtonLink href="/practice/poker">Practice it</ButtonLink>}
       />
 
       <div className="grid gap-5 lg:grid-cols-2">
