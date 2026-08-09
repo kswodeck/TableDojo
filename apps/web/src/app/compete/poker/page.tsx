@@ -112,7 +112,7 @@ function Machine() {
             <p className="mt-4 text-center text-sm text-crimson-400">
               Not enough coins for that bet — lower it, or{' '}
               <a href="/practice/poker" className="underline underline-offset-4">
-                practise for free
+                practice for free
               </a>
               .
             </p>

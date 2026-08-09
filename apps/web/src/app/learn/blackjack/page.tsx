@@ -112,7 +112,7 @@ export default function LearnBlackjackPage() {
         eyebrow="Learn"
         title="Blackjack basic strategy"
         description="Six decks, dealer stands on soft 17, double after split allowed, blackjack pays 3:2. Under these rules every hand has exactly one best play."
-        actions={<ButtonLink href="/practice/blackjack">Practise it</ButtonLink>}
+        actions={<ButtonLink href="/practice/blackjack">Practice it</ButtonLink>}
       />
 
       <div className="space-y-6">
@@ -170,7 +170,7 @@ export default function LearnBlackjackPage() {
         </Panel>
 
         <Panel>
-          <h2 className="text-xl font-bold">The four rules worth memorising first</h2>
+          <h2 className="text-xl font-bold">The four rules worth memorizing first</h2>
           <ol className="mt-4 space-y-3 text-ink-200">
             {[
               ['Always split aces and eights.', 'Two hands starting with an ace are strong; 16 is the worst hand there is.'],

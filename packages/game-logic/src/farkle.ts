@@ -163,7 +163,7 @@ export function classifyRoll(values: readonly DieValue[]): RollCategory {
 
   const largestSet = Math.max(0, ...counts.values());
   // Three 1s score as three individual 1s rather than as a set, so they are
-  // labelled like ordinary scoring dice.
+  // labeled like ordinary scoring dice.
   if (largestSet >= 4) return (`${largestSet} of a Kind`) as RollCategory;
   if (largestSet === 3 && !(counts.get(1) === 3)) return '3 of a Kind';
 

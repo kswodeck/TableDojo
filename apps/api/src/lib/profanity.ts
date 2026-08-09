@@ -23,7 +23,7 @@ const SUBSTRING_TERMS = [
   'masturbat', 'nigga', 'nigger', 'rimjob', 'schlong', 'shit', 'skank', 'slut', 'whore',
 ];
 
-/** Matched only as complete words, after normalisation. */
+/** Matched only as complete words, after normalization. */
 const WORD_TERMS = [
   'anal', 'arse', 'ass', 'boner', 'chode', 'cock', 'cum', 'cunt', 'dick', 'douche', 'dyke',
   'fag', 'felch', 'gooch', 'jism', 'kooch', 'penis', 'pussy', 'queef', 'retard', 'tit', 'twat',
@@ -42,8 +42,8 @@ const LEET: Record<string, string> = {
   '0': 'o', '1': 'i', '3': 'e', '4': 'a', '5': 's', '7': 't', '@': 'a', '$': 's', '!': 'i', '+': 't',
 };
 
-/** Folds leetspeak and drops punctuation so "sh1t" and "@ss" normalise through. */
-function normalise(text: string): string {
+/** Folds leetspeak and drops punctuation so "sh1t" and "@ss" normalize through. */
+function normalize(text: string): string {
   return text
     .toLowerCase()
     .replace(/[013457@$!+]/g, (char) => LEET[char] ?? char)
@@ -58,13 +58,13 @@ function despace(text: string): string {
 
 /** Returns the offending base term, or null when the text is clean. */
 export function findProfanity(text: string): string | null {
-  const normalised = despace(normalise(text));
+  const normalized = despace(normalize(text));
 
   for (const term of SUBSTRING_TERMS) {
-    if (normalised.includes(term)) return term;
+    if (normalized.includes(term)) return term;
   }
 
-  for (const token of normalised.split(' ')) {
+  for (const token of normalized.split(' ')) {
     const term = WORD_FORMS.get(token);
     if (term) return term;
   }

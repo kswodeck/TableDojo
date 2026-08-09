@@ -1,6 +1,6 @@
 # Table Dojo
 
-Learn and practise casino **table games** — blackjack, video poker and farkle. Free practice modes with
+Learn and practice casino **table games** — blackjack, video poker and farkle. Free practice modes with
 strategy guidance, and ranked modes where coins are on the line and the leaderboard is real.
 
 Play money only. No deposits, no cash prizes, no slot machines.
@@ -103,7 +103,7 @@ All responses are JSON. Errors share one shape: `{ "error": { "code", "message",
 ## Rewrite notes
 
 The original was an Express 4 + EJS app on Node 14, with game logic written as imperative DOM
-manipulation over module-level globals. The behaviour was worth keeping; almost none of the code was.
+manipulation over module-level globals. The behavior was worth keeping; almost none of the code was.
 
 ### Security
 

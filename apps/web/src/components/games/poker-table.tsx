@@ -54,7 +54,7 @@ export function HandBanner({ rank, won }: { rank: HandRank | null; won?: number 
  *
  * The original hard-coded the multipliers in a payout function *and* separately
  * in a static HTML table, so the two could disagree. Both this and the settlement
- * maths now read the same exported constant.
+ * math now read the same exported constant.
  */
 export function PayTable({ bet, highlight }: { bet: number; highlight?: HandRank | null }) {
   return (

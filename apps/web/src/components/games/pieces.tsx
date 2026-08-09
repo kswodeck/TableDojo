@@ -39,7 +39,9 @@ export function PlayingCard({
   const face = (
     <span
       className={cx(
-        'relative block aspect-[5/7] w-full overflow-hidden rounded-lg ring-1 transition-all duration-200',
+        // The true aspect ratio of the card art (327x500), so `object-contain`
+        // has nothing to letterbox and the ring hugs the artwork.
+        'relative block aspect-[327/500] w-full overflow-hidden rounded-lg ring-1 transition-all duration-200',
         held ? 'ring-2 ring-brass-400 -translate-y-2' : 'ring-felt-500/30',
         interactive && 'hover:-translate-y-1 hover:ring-brass-300/70',
       )}
